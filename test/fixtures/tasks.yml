@@ -1,0 +1,21 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  step_number: 
+  project: one
+  goal: one
+  planner: one
+  status: MyString
+  is_completed: false
+  date: 2020-05-08 13:20:19
+
+two:
+  name: MyString
+  step_number: 
+  project: two
+  goal: two
+  planner: two
+  status: MyString
+  is_completed: false
+  date: 2020-05-08 13:20:19

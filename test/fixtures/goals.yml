@@ -1,0 +1,21 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  start_date: 2020-05-08 13:16:05
+  end_date: 2020-05-08 13:16:05
+  goal_type: MyString
+  goal_total_days: 
+  goal_percentage: 1.5
+  user: one
+  frequency: MyString
+
+two:
+  name: MyString
+  start_date: 2020-05-08 13:16:05
+  end_date: 2020-05-08 13:16:05
+  goal_type: MyString
+  goal_total_days: 
+  goal_percentage: 1.5
+  user: two
+  frequency: MyString
