@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
-  resources :tasks, only: [:create, :index, :update, :destroy]
-  resources :notes, only: [:create, :index, :update, :destroy]
+  resources :tasks, only: [:create, :show, :index, :update, :destroy]
+  resources :notes, only: [:create, :show, :index, :update, :destroy]
   resources :goals, only: [:create, :index, :update, :destroy]
   resources :projects, only: [:create, :index, :update, :destroy]
   # resources :planners
