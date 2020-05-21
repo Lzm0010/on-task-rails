@@ -58,9 +58,9 @@ ActiveRecord::Schema.define(version: 2020_05_08_182019) do
   create_table "tasks", force: :cascade do |t|
     t.string "name"
     t.integer "step_number"
-    t.bigint "project_id", null: false
-    t.bigint "goal_id", null: false
-    t.bigint "planner_id", null: false
+    t.bigint "project_id"
+    t.bigint "goal_id"
+    t.bigint "planner_id"
     t.string "status"
     t.boolean "is_completed"
     t.datetime "date"
