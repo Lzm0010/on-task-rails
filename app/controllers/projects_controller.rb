@@ -7,7 +7,9 @@ class ProjectsController < ApplicationController
     def create
         project = Project.new(project_params)
         if project.save
-            render json: project
+            render json: project.to_json(:include => {
+                :tasks => {:only => [:name, :step_number, :project_id, :goal_id, :planner_id, :status, :is_completed, :date]}
+            })
         else
             render json: {"message": "project couldn't be created."}
         end
