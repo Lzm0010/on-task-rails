@@ -1,14 +1,16 @@
 class ProjectsController < ApplicationController
     def index
         projects = Project.all
-        render json: projects
+        render json: projects.to_json(:include => {
+            :tasks => {:only => [:id, :name, :step_number, :project_id, :goal_id, :planner_id, :status, :is_completed, :date]}
+        })
     end
 
     def create
         project = Project.new(project_params)
         if project.save
             render json: project.to_json(:include => {
-                :tasks => {:only => [:name, :step_number, :project_id, :goal_id, :planner_id, :status, :is_completed, :date]}
+                :tasks => {:only => [:id, :name, :step_number, :project_id, :goal_id, :planner_id, :status, :is_completed, :date]}
             })
         else
             render json: {"message": "project couldn't be created."}
@@ -18,7 +20,9 @@ class ProjectsController < ApplicationController
     def update
         project = Project.find(params[:id])
         if project.update_attributes(project_params)
-            render json: project
+            render json: project.to_json(:include => {
+                :tasks => {:only => [:id, :name, :step_number, :project_id, :goal_id, :planner_id, :status, :is_completed, :date]}
+            })
         else
             render json: {"message": "Something went wrong!"}
         end
@@ -27,7 +31,9 @@ class ProjectsController < ApplicationController
     def destroy
         project = Project.find(params[:id])
         if project.destroy
-            render json: project
+            render json: project.to_json(:include => {
+                :tasks => {:only => [:id, :name, :step_number, :project_id, :goal_id, :planner_id, :status, :is_completed, :date]}
+            })
         else
             render json: {"message": "Couldn't delete project."}
         end
