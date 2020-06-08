@@ -7,8 +7,9 @@ class GoalsController < ApplicationController
     end
 
     def create
-        goal = Goal.new(goal_params)
-        if goal.save
+        goal = Goal.create(goal_params)
+        goal.create_tasks_for_goal
+        if goal
             render json: goal.to_json(:include => {
                 :tasks => {:only => [:id, :name, :step_number, :project_id, :goal_id, :planner_id, :status, :is_completed, :date]}
             })
@@ -19,7 +20,11 @@ class GoalsController < ApplicationController
 
     def update
         goal = Goal.find(params[:id])
-        if goal.update_attributes(goal_params)
+        goal.destroy_tasks
+        goal.update(goal_params)
+        goal.create_tasks_for_goal
+        goal.reload.tasks
+        if goal
             render json: goal.to_json(:include => {
                 :tasks => {:only => [:id, :name, :step_number, :project_id, :goal_id, :planner_id, :status, :is_completed, :date]}
             })
