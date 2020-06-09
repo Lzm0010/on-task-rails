@@ -8,4 +8,5 @@ class User < ApplicationRecord
     has_many :notes, through: :planner
 
     has_secure_password
+    validates :username, uniqueness: {case_sensitive: false}
 end
