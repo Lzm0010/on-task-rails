@@ -19,7 +19,9 @@ class ProjectsController < ApplicationController
 
     def update
         project = Project.find(params[:id])
-        if project.update_attributes(project_params)
+        project.update(project_params)
+        project.reload.tasks
+        if project
             render json: project.to_json(:include => {
                 :tasks => {:only => [:id, :name, :step_number, :project_id, :goal_id, :planner_id, :status, :is_completed, :date]}
             })
