@@ -9,6 +9,7 @@ class UsersController < ApplicationController
     def create
         user = User.create(user_params)
         if user.valid?
+          Planner.create(user_id: user.id)
           payload = {user_id: user.id}
           token = encode_token(payload)
           render json: {user:user, jwt: token}

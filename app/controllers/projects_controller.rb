@@ -1,6 +1,6 @@
 class ProjectsController < ApplicationController
     def index
-        projects = Project.all
+        projects = Project.where(user_id: current_user.id)
         render json: projects.to_json(:include => {
             :tasks => {:only => [:id, :name, :step_number, :project_id, :goal_id, :planner_id, :status, :is_completed, :date]}
         })

@@ -1,6 +1,6 @@
 class GoalsController < ApplicationController
     def index
-        goals = Goal.all
+        goals = Goal.where(user_id: current_user.id)
         render json: goals.to_json(:include => {
             :tasks => {:only => [:id, :name, :step_number, :project_id, :goal_id, :planner_id, :status, :is_completed, :date]}
         })
