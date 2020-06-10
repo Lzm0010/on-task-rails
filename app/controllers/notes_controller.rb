@@ -1,6 +1,6 @@
 class NotesController < ApplicationController
     def index
-        notes = Note.all
+        notes = Note.where(planner_id: current_user.planner.id)
         render json: notes
     end
 
