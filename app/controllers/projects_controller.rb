@@ -1,9 +1,9 @@
 class ProjectsController < ApplicationController
     def index
-        projects = Project.where(user_id: current_user.id)
+        projects = Project.where(user_id: current_user.id).sort_by &:created_at
         render json: projects.to_json(:include => {
             :tasks => {:only => [:id, :name, :step_number, :project_id, :goal_id, :planner_id, :status, :is_completed, :date]}
-        })
+        }, :methods => [:completed_tasks, :total_tasks])
     end
 
     def create
