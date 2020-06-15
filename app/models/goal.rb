@@ -16,6 +16,18 @@ class Goal < ApplicationRecord
     self.tasks.destroy_all
   end
 
+  def percentage
+    ((completed_tasks / total_tasks.to_f) * 100).to_i
+  end
+
+  def completed_tasks
+    self.tasks.where(is_completed: true).length
+  end
+
+  def total_tasks
+    self.tasks.length
+  end
+
   private
 
   def number_of_days

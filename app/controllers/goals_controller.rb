@@ -1,9 +1,9 @@
 class GoalsController < ApplicationController
     def index
-        goals = Goal.where(user_id: current_user.id)
+        goals = Goal.where(user_id: current_user.id).sort_by &:created_at
         render json: goals.to_json(:include => {
             :tasks => {:only => [:id, :name, :step_number, :project_id, :goal_id, :planner_id, :status, :is_completed, :date]}
-        })
+        }, :methods => [:completed_tasks, :percentage, :total_tasks])
     end
 
     def create

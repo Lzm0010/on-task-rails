@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
     def index
-        tasks = current_user.tasks_by_user
+        tasks = current_user.tasks_by_user.sort_by &:created_at
         render json: tasks
     end
 
@@ -20,7 +20,7 @@ class TasksController < ApplicationController
 
     def update
         task = Task.find(params[:id])
-        if task.update_attributes(task_params)
+        if task.update(task_params)
             render json: task
         else
             render json: {"message": "Something went wrong!"}
