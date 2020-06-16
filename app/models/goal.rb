@@ -4,11 +4,32 @@ class Goal < ApplicationRecord
   accepts_nested_attributes_for :tasks, allow_destroy: true
 
   def create_tasks_for_goal
-    case self.goal_type
-    when "total"
-      self.create_tasks_for_total
-    when "percentage"
-      self.create_tasks_for_percentage
+    start = self.start_date.to_date
+    if self.frequency_as_int >= 30
+      days = (start..self.end_date.to_date).select {|d| d.day == start.day }
+      days = self.frequency_as_int == 30 ? days : days.select.each_with_index{|d, i| d if i.even?}
+      p days
+      days.each do |day|
+        Task.create(
+          name: self.name,
+          goal_id: self.id,
+          status: 'active',
+          is_completed: false,
+          date: day
+        )
+      end
+    else
+      days = self.number_of_days / self.frequency_as_int
+      interval = self.frequency_as_int
+      days.times do |index|
+        Task.create(
+          name: self.name,
+          goal_id: self.id,
+          status: 'active',
+          is_completed: false,
+          date: start + (index * interval).day
+        )
+      end
     end
   end
 
@@ -47,37 +68,10 @@ class Goal < ApplicationRecord
     when "monthly"
       30
     when "bimonthly"
-      60
+      61
     else
       1
     end
   end
 
-  def create_tasks_for_total
-    days = self.number_of_days / self.frequency_as_int
-    interval = self.frequency_as_int
-    days.times do |index|
-      Task.create(
-        name: self.name,
-        goal_id: self.id,
-        status: 'active',
-        is_completed: false,
-        date: self.start_date.to_date + (index * interval).day
-      )
-    end
-  end
-
-  def create_tasks_for_percentage
-    days = self.number_of_days / self.frequency_as_int
-    interval = self.frequency_as_int
-    days.times do |index|
-      Task.create(
-        name: self.name,
-        goal_id: self.id,
-        status: 'active',
-        is_completed: false,
-        date: self.start_date.to_date + (index * interval).day
-      )
-    end
-  end
 end
