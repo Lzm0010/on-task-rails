@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  root 'welcome#index'
   resources :tasks, only: [:create, :show, :index, :update, :destroy]
   resources :notes, only: [:create, :show, :index, :update, :destroy]
   resources :goals, only: [:create, :index, :update, :destroy]
